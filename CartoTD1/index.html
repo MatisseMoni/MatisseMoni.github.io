@@ -141,9 +141,9 @@
 
     if (window.DeviceOrientationEvent) {
         window.addEventListener('deviceorientation', function (event) {
-            $("#x").text(event.alpha)
-            $("#y").text(event.beta)
-            $("#z").text(event.gamma)
+            $("#x").text(event.alpha.toFixed(2))
+            $("#y").text(event.beta.toFixed(2))
+            $("#z").text(event.gamma.toFixed(2))
         });
     }
 
