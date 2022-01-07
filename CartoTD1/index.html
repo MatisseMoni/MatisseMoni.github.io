@@ -81,6 +81,30 @@
                 <td>Z</td>
                 <td id="z"></td>
             </tr>
+            <tr>
+                <td>Rotation X</td>
+                <td id="rotationX"></td>
+            </tr>
+            <tr>
+                <td>Rotation X</td>
+                <td id="rotationY"></td>
+            </tr>
+            <tr>
+                <td>Rotation X</td>
+                <td id="rotationZ"></td>
+            </tr>
+            <tr>
+                <td>Acceleration X</td>
+                <td id="accelerationX"></td>
+            </tr>
+            <tr>
+                <td>Acceleration Y</td>
+                <td id="accelerationY"></td>
+            </tr>
+            <tr>
+                <td>Acceleration Z</td>
+                <td id="accelerationZ"></td>
+            </tr>
         </tbody>
     </table>
 </body>
@@ -147,6 +171,17 @@
             $("#x").text(x)
             $("#y").text(y)
             $("#z").text(z)
+        });
+    }
+    if (window.DeviceMotionEvent) {
+        window.addEventListener('devicemotion', function (event) {
+            $("#accelerationX").text(event.acceleration.x)
+            $("#accelerationY").text(event.acceleration.y)
+            $("#accelerationZ").text(event.acceleration.z)
+            $("#rotationX").text(event.rotationRate.alpha)
+            $("#rotationY").text(event.rotationRate.beta)
+            $("#rotationZ").text(event.rotationRate.gamma)
+            
         });
     }
 
