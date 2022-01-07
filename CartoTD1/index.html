@@ -39,6 +39,7 @@
             jQuery("#get #precision").append(crd.accuracy)
             jQuery("#get #time").append(time)
             jQuery("#get #vitesse").append(crd.speed)
+            console.log(crd.speed)
         }
 
         function error(err) {
@@ -53,21 +54,16 @@
 
         function success(pos) {
             var crd = pos.coords;
-
-            if (target.latitude === crd.latitude && target.longitude === crd.longitude) {
-                console.log('Bravo, vous avez atteint la cible');
-                navigator.geolocation.clearWatch(id);
-            }
+            var time = pos.timestamp
+            jQuery("#watch #coordonnees").append("Latitude : " + crd.latitude + ", Longitude :" + crd.longitude)
+            jQuery("#watch #precision").append(crd.accuracy)
+            jQuery("#watch #time").append(time)
+            jQuery("#watch #vitesse").append(crd.speed)
         }
 
         function error(err) {
             console.warn('ERROR(' + err.code + '): ' + err.message);
         }
-
-        target = {
-            latitude: 0,
-            longitude: 0
-        };
 
         options = {
             enableHighAccuracy: false,
@@ -79,6 +75,7 @@
     }
 
     getPosition()
+    watch()
 
 
 
