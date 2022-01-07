@@ -63,6 +63,25 @@
                 <td class="time"></td>
             </tr>
         </tbody>
+        <thead>
+            <tr>
+                <th colspan="2">Exo 3</th>
+            </tr>
+        </thead>
+        <tbody id="orientation">
+            <tr>
+                <td>X</td>
+                <td id="x"></td>
+            </tr>
+            <tr>
+                <td>Y</td>
+                <td id="y"></td>
+            </tr>
+            <tr>
+                <td>Z</td>
+                <td id="z"></td>
+            </tr>
+        </tbody>
     </table>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -120,7 +139,13 @@
     watch()
     getPosition()
 
-
+    if (window.DeviceOrientationEvent) {
+        window.addEventListener('deviceorientation', function (event) {
+            $("#x").text(event.alpha)
+            $("#y").text(event.beta)
+            $("#z").text(event.gamma)
+        });
+    }
 
 
 </script>
