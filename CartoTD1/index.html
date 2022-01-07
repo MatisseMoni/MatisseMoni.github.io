@@ -8,20 +8,62 @@
 
 <body>
     <h2>Exo 2</h2>
-    <h3>Avec getCurrentPosition()</h3>
-    <ul id="get">
-        <li>sa position lon, lat <span class="coordonnees"></span></li>
-        <li>la précision de mesure <span class="precision"></span></li>
-        <li>sa vitesse <span class="vitesse"></span></li>
-        <li>Le time stamp <span class="time"></span></li>
-    </ul>
-    <h3>Avec watchPosition()</h3>
-    <ul id="watch">
-        <li>sa position lon, lat <span class="coordonnees"></span></li>
-        <li>la précision de mesure <span class="precision"></span></li>
-        <li>sa vitesse <span class="vitesse"></span></li>
-        <li>Le time stamp <span class="time"></span></li>
-    </ul>
+    <table>
+        <thead>
+            <tr>
+                <th colspan="2">Avec getCurrentPosition()</th>
+            </tr>
+        </thead>
+        <tbody id="get">
+            <tr>
+                <td>Latitude</td>
+                <td class="latitude"></td>
+            </tr>
+            <tr>
+                <td>Longitude</td>
+                <td class="longitude"></td>
+            </tr>
+            <tr>
+                <td>Précision</td>
+                <td class="precision"></td>
+            </tr>
+            <tr>
+                <td>Vitesse</td>
+                <td class="vitesse"></td>
+            </tr>
+            <tr>
+                <td>Timestamp</td>
+                <td class="time"></td>
+            </tr>
+        </tbody>
+        <thead>
+            <tr>
+                <th colspan="2">Avec watchPosition()</th>
+            </tr>
+        </thead>
+        <tbody id="watch">
+            <tr>
+                <td>Latitude</td>
+                <td class="latitude"></td>
+            </tr>
+            <tr>
+                <td>Longitude</td>
+                <td class="longitude"></td>
+            </tr>
+            <tr>
+                <td>Précision</td>
+                <td class="precision"></td>
+            </tr>
+            <tr>
+                <td>Vitesse</td>
+                <td class="vitesse"></td>
+            </tr>
+            <tr>
+                <td>Timestamp</td>
+                <td class="time"></td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
@@ -35,11 +77,11 @@
         function success(pos) {
             var crd = pos.coords;
             var time = pos.timestamp
-            jQuery("#get .coordonnees").text("Latitude : " + crd.latitude + ", Longitude :" + crd.longitude)
+            jQuery("#get .latitude").text(crd.latitude)
+            jQuery("#get .longitude").text(crd.longitude)
             jQuery("#get .precision").text(crd.accuracy)
             jQuery("#get .time").text(time)
             jQuery("#get .vitesse").text(crd.speed)
-            console.log(crd.speed)
         }
 
         function error(err) {
@@ -55,7 +97,8 @@
         function success(pos) {
             var crd = pos.coords;
             var time = pos.timestamp
-            jQuery("#watch .coordonnees").text("Latitude : " + crd.latitude + ", Longitude :" + crd.longitude)
+            jQuery("#watch .latitude").text(crd.latitude)
+            jQuery("#watch .longitude").text(crd.longitude)
             jQuery("#watch .precision").text(crd.accuracy)
             jQuery("#watch .time").text(time)
             jQuery("#watch .vitesse").text(crd.speed)
@@ -76,7 +119,7 @@
 
     watch()
     getPosition()
-    
+
 
 
 
