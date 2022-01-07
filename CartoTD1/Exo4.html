@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>GeoCarto</title>
+    <meta charset="utf-8" />
+</head>
+
+<body>
+    <h2>Exo 4</h2>
+    <table>
+        <thead>
+            <tr>
+                <th colspan="2">Avec getCurrentPosition()</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Position X cliquée</td>
+                <td class="positionX"></td>
+            </tr>
+            <tr>
+                <td>Position Y cliquée</td>
+                <td class="positionY"></td>
+            </tr>
+            <tr>
+                <td>Type d’event</td>
+                <td class="type"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    function startup() {
+        window.addEventListener("touchstart", handleStart, false);
+        window.addEventListener("touchend", handleEnd, false);
+        window.addEventListener("touchcancel", handleCancel, false);
+        window.addEventListener("touchleave", handleLeave, false);
+        window.addEventListener("touchmove", handleMove, false);
+    }
+
+    function handleStart(evt) {
+        evt.preventDefault();
+        var ctx = window.getContext("2d");
+        var touches = evt.changedTouches;
+        for (var i = 0; i < touches.length; i++) {
+            $(".position").text(touches[i].screenX)
+            $(".position").text(touches[i].screenY)
+        }
+    }
+</script>
+
+</html>
