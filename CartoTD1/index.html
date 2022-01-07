@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>GeoCarto</title>
+    <meta charset="utf-8" />
+</head>
+
+<body>
+    <h2>Exo 2</h2>
+    <h3>Avec getCurrentPosition()</h3>
+    <ul id="get">
+        <li>sa position lon, lat <span id="coordonnees"></span></li>
+        <li>la précision de mesure <span id="precision"></span></li>
+        <li>sa vitesse <span id="vitesse"></span></li>
+        <li>Le time stamp <span id="time"></span></li>
+    </ul>
+    <h3>Avec watchPosition()</h3>
+    <ul id="watch">
+        <li>sa position lon, lat <span id="coordonnees"></span></li>
+        <li>la précision de mesure <span id="precision"></span></li>
+        <li>sa vitesse <span id="vitesse"></span></li>
+        <li>Le time stamp <span id="time"></span></li>
+    </ul>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    function getPosition() {
+        var options = {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 0
+        };
+
+        function success(pos) {
+            var crd = pos.coords;
+            var time = pos.timestamp
+            jQuery("#get #coordonnees").append("Latitude : " + crd.latitude + ", Longitude :" + crd.longitude)
+            jQuery("#get #precision").append(crd.accuracy)
+            jQuery("#get #time").append(time)
+            jQuery("#get #vitesse").append(crd.speed == null ? 0 : cdr.speed)
+        }
+
+        function error(err) {
+            console.warn(`ERREUR (${err.code}): ${err.message}`);
+        }
+
+        navigator.geolocation.getCurrentPosition(success, error, options);
+    }
+
+    function watch() {
+        var id, target, options;
+
+        function success(pos) {
+            var crd = pos.coords;
+
+            if (target.latitude === crd.latitude && target.longitude === crd.longitude) {
+                console.log('Bravo, vous avez atteint la cible');
+                navigator.geolocation.clearWatch(id);
+            }
+        }
+
+        function error(err) {
+            console.warn('ERROR(' + err.code + '): ' + err.message);
+        }
+
+        target = {
+            latitude: 0,
+            longitude: 0
+        };
+
+        options = {
+            enableHighAccuracy: false,
+            timeout: 5000,
+            maximumAge: 0
+        };
+
+        id = navigator.geolocation.watchPosition(success, error, options);
+    }
+
+    getPosition()
+
+
+
+</script>
+
+</html>
