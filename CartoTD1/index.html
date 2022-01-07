@@ -10,17 +10,17 @@
     <h2>Exo 2</h2>
     <h3>Avec getCurrentPosition()</h3>
     <ul id="get">
-        <li>sa position lon, lat <span id="coordonnees"></span></li>
-        <li>la précision de mesure <span id="precision"></span></li>
-        <li>sa vitesse <span id="vitesse"></span></li>
-        <li>Le time stamp <span id="time"></span></li>
+        <li>sa position lon, lat <span class="coordonnees"></span></li>
+        <li>la précision de mesure <span class="precision"></span></li>
+        <li>sa vitesse <span class="vitesse"></span></li>
+        <li>Le time stamp <span class="time"></span></li>
     </ul>
     <h3>Avec watchPosition()</h3>
     <ul id="watch">
-        <li>sa position lon, lat <span id="coordonnees"></span></li>
-        <li>la précision de mesure <span id="precision"></span></li>
-        <li>sa vitesse <span id="vitesse"></span></li>
-        <li>Le time stamp <span id="time"></span></li>
+        <li>sa position lon, lat <span class="coordonnees"></span></li>
+        <li>la précision de mesure <span class="precision"></span></li>
+        <li>sa vitesse <span class="vitesse"></span></li>
+        <li>Le time stamp <span class="time"></span></li>
     </ul>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -35,10 +35,10 @@
         function success(pos) {
             var crd = pos.coords;
             var time = pos.timestamp
-            jQuery("#get #coordonnees").append("Latitude : " + crd.latitude + ", Longitude :" + crd.longitude)
-            jQuery("#get #precision").append(crd.accuracy)
-            jQuery("#get #time").append(time)
-            jQuery("#get #vitesse").append(crd.speed)
+            jQuery("#get .coordonnees").text("Latitude : " + crd.latitude + ", Longitude :" + crd.longitude)
+            jQuery("#get .precision").text(crd.accuracy)
+            jQuery("#get .time").text(time)
+            jQuery("#get .vitesse").text(crd.speed)
             console.log(crd.speed)
         }
 
@@ -55,10 +55,10 @@
         function success(pos) {
             var crd = pos.coords;
             var time = pos.timestamp
-            jQuery("#watch #coordonnees").append("Latitude : " + crd.latitude + ", Longitude :" + crd.longitude)
-            jQuery("#watch #precision").append(crd.accuracy)
-            jQuery("#watch #time").append(time)
-            jQuery("#watch #vitesse").append(crd.speed)
+            jQuery("#watch .coordonnees").text("Latitude : " + crd.latitude + ", Longitude :" + crd.longitude)
+            jQuery("#watch .precision").text(crd.accuracy)
+            jQuery("#watch .time").text(time)
+            jQuery("#watch .vitesse").text(crd.speed)
         }
 
         function error(err) {
@@ -74,8 +74,9 @@
         id = navigator.geolocation.watchPosition(success, error, options);
     }
 
-    getPosition()
     watch()
+    getPosition()
+    
 
 
 
