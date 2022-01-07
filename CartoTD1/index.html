@@ -38,7 +38,7 @@
             jQuery("#get #coordonnees").append("Latitude : " + crd.latitude + ", Longitude :" + crd.longitude)
             jQuery("#get #precision").append(crd.accuracy)
             jQuery("#get #time").append(time)
-            jQuery("#get #vitesse").append(crd.speed == null ? 0 : cdr.speed)
+            jQuery("#get #vitesse").append(crd.speed)
         }
 
         function error(err) {
