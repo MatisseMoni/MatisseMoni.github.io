@@ -175,12 +175,18 @@
     }
     if (window.DeviceMotionEvent) {
         window.addEventListener('devicemotion', function (event) {
-            $("#accelerationX").text(event.acceleration.x)
-            $("#accelerationY").text(event.acceleration.y)
-            $("#accelerationZ").text(event.acceleration.z)
-            $("#rotationX").text(event.rotationRate.alpha)
-            $("#rotationY").text(event.rotationRate.beta)
-            $("#rotationZ").text(event.rotationRate.gamma)
+            Ax = Math.round(event.acceleration.x * 100) / 100
+            Ay = Math.round(event.acceleration.y * 100) / 100
+            Az = Math.round(event.acceleration.z * 100) / 100
+            Rx = Math.round(event.rotationRate.alpha * 100) / 100
+            Ry = Math.round(event.rotationRate.beta * 100) / 100
+            Rz = Math.round(event.rotationRate.gamma * 100) / 100
+            $("#accelerationX").text(Ax)
+            $("#accelerationY").text(Ay)
+            $("#accelerationZ").text(Az)
+            $("#rotationX").text(Rx)
+            $("#rotationY").text(Ry)
+            $("#rotationZ").text(Rz)
             
         });
     }
