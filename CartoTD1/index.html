@@ -141,9 +141,12 @@
 
     if (window.DeviceOrientationEvent) {
         window.addEventListener('deviceorientation', function (event) {
-            $("#x").text(event.alpha.toFixed(2))
-            $("#y").text(event.beta.toFixed(2))
-            $("#z").text(event.gamma.toFixed(2))
+            x = Math.round(event.alpha * 100) / 100
+            y = Math.round(event.beta * 100) / 100
+            z = Math.round(event.gamma * 100) / 100
+            $("#x").text(x)
+            $("#y").text(y)
+            $("#z").text(z)
         });
     }
 
