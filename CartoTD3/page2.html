@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <svg width="800" height="500">
+        <!-- Simple rect element -->
+        <rect class="jour" id="ciel" x="0" y="0" width="800" height="500"/>
+        <circle class="jour" id="soleil" cx="660" cy="100" r="50"/>
+        <polygon points="40 300, 145 130, 250 300" style="fill: #92590f;" stroke="#472b06" stroke-width="3" />
+        <polygon points="180 300, 285 130, 390 300" style="fill: #92590f;" stroke="#472b06" stroke-width="3" />
+        <polygon points="360 300, 465 130, 570 300" style="fill: #92590f;" stroke="#472b06" stroke-width="3" />
+        <polygon points="410 300, 515 130, 620 300" style="fill: #92590f;" stroke="#472b06" stroke-width="3" />
+        <rect id="herbe" x="0" y="300" width="800" height="200" style="fill: #48c928;" />
+        <rect id="mur" x="70" y="270" width="240" height="200" style="fill: #f18509;" />
+        <polygon points="70 270, 200 150, 310 270" style="fill: #db1711;" stroke="#472b06" stroke-width="3" />
+        <rect id="porte" x="110" y="290" width="80" height="180" style="fill: #ee4a09;" />
+    </svg>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $("#soleil").click(function(){
+        $("#soleil").toggleClass("jour").toggleClass("nuit")
+        $("#ciel").toggleClass("jour").toggleClass("nuit")
+    })
+</script>
+<style type="text/css">
+    #soleil.jour {
+        fill: #dadd32;
+    }
+
+    #soleil.nuit {
+        fill: #f5f5ec;
+    }
+
+    #ciel.jour {
+        fill: #2e79f3;
+    }
+
+    #ciel.nuit {
+        fill: rgb(18, 0, 117);
+    }
+</style>
+
+</html>

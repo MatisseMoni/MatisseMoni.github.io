@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script type="application/javascript">
+        function draw() {
+          var canvas = document.getElementById("canvas");
+          if (canvas.getContext) {
+            var ctx = canvas.getContext("2d");
+            
+            ctx.drawImage(document.getElementById('fond_japon'),50,50,1889,1200,0,-200,600,500);
+
+            ctx.fillStyle = 'rgb(255, 200, 0)'; //Rectangle
+            ctx.fillRect(20,120,30,30);
+
+            ctx.fillStyle = 'rgb(0, 128, 60)'; //Rectangle
+            ctx.fillRect(30,130,10,20);
+
+            ctx.fillStyle = 'rgb(255,60,60)'; // Triangle
+            ctx.beginPath();
+            ctx.moveTo(20,120);
+            ctx.lineTo(35,100);
+            ctx.lineTo(50,120);
+            ctx.fill();
+            ctx.closePath();
+
+            ctx.fillStyle = 'rgb(255,255,0)'; //Cercle
+            ctx.beginPath();
+            ctx.arc(100, 20, 10, 0, Math.PI * 2, true);
+            ctx.fill();
+            ctx.closePath();
+            
+
+            
+            
+
+          }
+        }
+      </script>
+
+    <style type="text/css">
+        canvas { border: 1px solid black; }
+    </style>
+
+</head>
+<body onload="draw();">
+    <canvas id="canvas" width="500" height="200">
+        <div>
+            <img id="fond_japon" src="japon.jpg" width="150" height="150"/>
+        </div>
+    </canvas>
+</body>
+</html>
