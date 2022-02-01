@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>My first three.js app</title>
+	<style>
+		body {
+			margin: 0;
+		}
+	</style>
+</head>
+
+<body>
+	<script src="https://threejs.org/build/three.js"></script>
+	<script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
+	<script src="https://threejs.org//examples/js/loaders/GLTFLoader.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+	<script>
+		import { Interaction } from 'three.interaction';
+
+		const loader = new THREE.TextureLoader();
+		const loader3D = new THREE.GLTFLoader();
+		const RADIUS = 100;
+		//getJson
+
+		var myHeaders = new Headers();
+
+		var myInit = {
+			method: 'GET',
+			headers: myHeaders,
+			mode: 'cors',
+			cache: 'default'
+		};
+
+
+
+
+
+		//long/lat to x/y
+		function calcPosFromLatLonRad(lat, lon, radius) {
+			var phi = (90 - lat) * (Math.PI / 180);
+			var theta = (lon + 180) * (Math.PI / 180);
+			x = -((radius) * Math.sin(phi) * Math.cos(theta));
+			z = ((radius) * Math.sin(phi) * Math.sin(theta));
+			y = ((radius) * Math.cos(phi));//from  w ww.  d  em  o  2  s.c  o m
+			return [x, y, z];
+		}
+
+		//import soildier
+
+
+
+		// Load a glTF resource
+		let soldier;
+
+		loader3D.load('./Soldier.glb', function (gltf) {
+			soldier = gltf.scene;  // sword 3D object is loaded
+		});
+
+		//Current Position
+		function getPosition() {
+			var options = {
+				enableHighAccuracy: true,
+				timeout: 5000,
+				maximumAge: 0
+			};
+
+			function success(pos) {
+				var crd = pos.coords;
+				pos = calcPosFromLatLonRad(crd.latitude, crd.longitude, RADIUS)
+				/*const geometry2 = new THREE.SphereGeometry(1, 32, 32);
+				var material2 = new THREE.MeshPhongMaterial({
+					flatShading: true,
+					color: 0xff0000,
+					specular: 0x333333,
+					shininess: 15,
+				})
+				const marker = new THREE.Mesh(geometry2, material2);
+				marker.position.set(pos[0], pos[1], pos[2]);*/
+				soldier.position.set(pos[0], pos[1], pos[2]);
+				soldier.scale.set(2, 2, 2)
+				sphere.attach(soldier)
+
+			}
+
+			function error(err) {
+				console.warn(`ERREUR (${err.code}): ${err.message}`);
+			}
+
+			navigator.geolocation.getCurrentPosition(success, error, options);
+		}
+
+		//Render
+		var renderer = new THREE.WebGLRenderer({ antialias: true });
+		renderer.setSize(window.innerWidth, window.innerHeight);
+		document.body.appendChild(renderer.domElement);
+
+		//Scene
+		var scene = new THREE.Scene();
+		loader.load('texture/ciel.jpeg', function (texture) {
+			scene.background = texture;
+		});
+
+		//Camera
+
+		var camera = new THREE.PerspectiveCamera(45,
+			window.innerWidth / window.innerHeight, 0.1, 10000);
+		const controls = new THREE.OrbitControls(camera, renderer.domElement);
+		camera.position.set(0, 0, 250);
+		controls.update();
+
+		//Light
+		const ambientLight = new THREE.AmbientLight(0xffffff);
+		scene.add(ambientLight);
+
+		//Sphere World
+		var world = loader.load('texture/worldMap.jpg');
+		const geometry = new THREE.SphereGeometry(RADIUS, 250, 250);
+		var material = new THREE.MeshPhongMaterial({
+			map: world,
+			flatShading: false,
+			color: 0xaaaaaa,
+			specular: 0x333333,
+			shininess: 15,
+		})
+		const sphere = new THREE.Mesh(geometry, material);
+
+
+		//Sphere ping
+		getPosition();
+		scene.add(sphere);
+
+		const interaction = new Interaction(renderer, scene, camera);
+		fetch("https://restcountries.com/v3.1/all").then(response => response.json())
+			.then(response => response.forEach(element => {
+				pos = calcPosFromLatLonRad(element['latlng'][0], element['latlng'][1], RADIUS)
+				const geometry = new THREE.SphereGeometry(1, 32, 32);
+				var material = new THREE.MeshPhongMaterial({
+					map: loader.load(element['flags']['png']),
+					flatShading: true,
+					specular: 0x333333,
+					shininess: 15,
+				})
+
+				const marker = new THREE.Mesh(geometry, material);
+				marker.cursor = 'pointer';
+				marker.on('click', function (ev) { console.log(element) });
+				marker.position.set(pos[0], pos[1], pos[2]);
+				sphere.attach(marker);
+			}));
+
+		//Animation
+		var animate = function () {
+			requestAnimationFrame(animate);
+			controls.update();
+			renderer.render(scene, camera);
+		};
+		animate();
+
+		scene.on('touchstart', ev => {
+			console.log(ev);
+		})
+	</script>
+</body>
+
+</html>
