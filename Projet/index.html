@@ -4,19 +4,65 @@
 <head>
     <meta charset="utf-8">
     <title>My first three.js app</title>
-    <style>
-        body {
-            margin: 0;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.11.1/dist/css/uikit.min.css" />
+    <link rel="stylesheet" href="style.css">
 </head>
+<!--
+    il manque :
+    orbital control zoom at object avec min et max
+    camera follow object
+
+    pannel info sur la planete
+    Mettre la lumiere sur le soleil
+
+-->
 
 <body>
-    <script src="valeurs.json"></script>
-    <script src="./js/three.js"></script>
-    <script src='js/OrbitControls.js'></script>
-    <script src="js/threegltf.js"></script>
-    <script src="three-anime.js"></script>
+    <div id="nav-control" class="uk-position-top-right uk-navbar-container">
+        <div>
+            <div class="uk-h3">Vitesse :</div>
+            <div class="slidecontainer">
+                <input type="range" min="0" max="8" value="0" class="slider-value" id="myRange">
+            </div>
+        </div>
+        <div>
+            <label class="uk-h3">Zoom sur :</label>
+            <div>
+                <select name="target-zoom" class="uk-button uk-button-primary" id="target-zoom">
+                    <option value="8">Soleil</option>
+                    <option value="0">Mercure</option>
+                    <option value="1">Vénus</option>
+                    <option value="2">Terre</option>
+                    <option value="3">Mars</option>
+                    <option value="4">Jupiter</option>
+                    <option value="5">Saturne</option>
+                    <option value="6">Uranus</option>
+                    <option value="7">Neptune</option>
+                    <option value="9">Lune</option>
+                </select>
+            </div>
+            <div>
+                <label class="uk-h3">Camera libre</label>
+                <div>
+                    <label class="switch">
+                        <input id="checkbox" type="checkbox" checked>
+                        <span class="slider-checkbox round"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.11.1/dist/js/uikit.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.11.1/dist/js/uikit-icons.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        <script src="valeurs.json"></script>
+        <script src="js/three.js"></script>
+        <script src='js/OrbitControls.js'></script>
+        <script src="js/threegltf.js"></script>
+        <script src="three-anime.js"></script>
+        <script src="custom.js"></script>
 </body>
 
 </html>

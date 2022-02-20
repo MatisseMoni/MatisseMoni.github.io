@@ -3,20 +3,38 @@ const texture = new THREE.TextureLoader()
 
 //values Planetes
 var valeursPlanetes;
-ROTATION_DELTA = 1
+var slider = document.getElementById("myRange");
+var focusOn = -1;
+
+ROTATION_DELTA = 1;
+slider.oninput = function() {
+    ROTATION_DELTA = Math.pow(10, this.value);
+}
+
+function calcPosFromLatLonRad(lat, lon, radius) {
+    var phi = (90 - lat) * (Math.PI / 180);
+    var theta = (lon + 180) * (Math.PI / 180);
+    x = -((radius) * Math.sin(phi) * Math.cos(theta));
+    z = ((radius) * Math.sin(phi) * Math.sin(theta));
+    y = ((radius) * Math.cos(phi)); //from  w ww.  d  em  o  2  s.c  o m
+    return [x, y, z];
+}
 
 
 fetch("./valeurs.json")
     .then(response => {
         return response.json();
     }).then(valeursPlanetes => {
+        //long/lat to x/y
+
+
         valeursPlanetes = valeursPlanetes["Planetes"]
             //scene
         const scene = new THREE.Scene();
         scene.background = texture.load('textures/univers.jpg')
             //camera
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 5000);
-        camera.position.y = 100;
+        camera.position.y = 30 + Math.log10(valeursPlanetes[8]["diametre"]);
 
         //renderer
         const renderer = new THREE.WebGLRenderer();
@@ -42,7 +60,7 @@ fetch("./valeurs.json")
         var mSoleil = new THREE.MeshBasicMaterial({
             map: texture.load("textures/sunmap.jpg")
         });
-        var gSoleil = new THREE.SphereGeometry(Math.log10(valeursPlanetes[9]["diametre"]), 360, 360);
+        var gSoleil = new THREE.SphereGeometry(Math.log10(valeursPlanetes[8]["diametre"]), 360, 360);
         Soleil = new THREE.Mesh(gSoleil, mSoleil);
         Soleil.geometry.computeVertexNormals(true);
 
@@ -143,17 +161,62 @@ fetch("./valeurs.json")
         Planets.push(Saturne);
 
         //Saturne Ring
-        console.log((Math.log10(valeursPlanetes[5]["diametre"]) + 1.2))
-        const gRingSaturne = new THREE.RingBufferGeometry(Math.log10(valeursPlanetes[5]["diametre"]), Math.log10(valeursPlanetes[5]["diametre"]), 360, 20);
-        const mRingSaturne = new THREE.MeshBasicMaterial({
-            map: texture.load('textures/saturnringcolor.png'),
-            color: 0xffffff,
-            side: THREE.DoubleSide,
-            transparent: true
+        const geometry = new THREE.RingBufferGeometry(3, 5, 64);
+        var pos = geometry.attributes.position;
+        var v3 = new THREE.Vector3();
+
+
+        var gRingSaturne = new THREE.RingBufferGeometry(Math.log10(valeursPlanetes[5]["diametre"]) + 1, (Math.log10(valeursPlanetes[5]["diametre"]) + (Math.log10(valeursPlanetes[5]["diametre"] * 2))), 360, 20);
+        var mRingSaturne = new THREE.ShaderMaterial({
+            uniforms: {
+                texture: { value: texture.load('textures/saturnringcolor.png') },
+                innerRadius: { value: Math.log10(valeursPlanetes[5]["diametre"]) + 1 },
+                outerRadius: { value: (Math.log10(valeursPlanetes[5]["diametre"]) + (Math.log10(valeursPlanetes[5]["diametre"] * 2))) }
+            },
+            vertexShader: `
+                uniform float innerRadius;
+                uniform float outerRadius;
+          
+                varying vec3 localPosition;
+                
+                void main() {
+                  localPosition = position;
+                  vec3 viewPosition = (modelViewMatrix * vec4(localPosition, 1.)).xyz;
+                  gl_Position = projectionMatrix * vec4(viewPosition, 1.);
+                }
+              `,
+            fragmentShader: `
+                uniform sampler2D texture;
+                uniform float innerRadius;
+                uniform float outerRadius;
+          
+                varying vec3 localPosition;
+          
+                vec4 color() {
+                  vec2 uv;
+                  uv.x = (length(localPosition) - innerRadius) / (outerRadius - innerRadius);
+                  if (uv.x < 0.0 || uv.x > 1.0) {
+                    discard;
+                  }
+                  
+                  vec4 pixel = texture2D(texture, uv);
+                  return pixel;
+                }
+          
+                void main() {
+                  gl_FragColor = color();
+                }
+              `
         });
         mRingSaturne.bumpMap = texture.load('textures/saturnringpattern.gif')
+        var pos = gRingSaturne.attributes.position;
 
-        const RingSaturne = new THREE.Mesh(gRingSaturne, mRingSaturne);
+        for (let i = 0; i < pos.count; i++) {
+            v3.fromBufferAttribute(pos, i);
+            gRingSaturne.attributes.uv.setXY(i, v3.length() < 4 ? 0 : 1, 1);
+        }
+
+        var RingSaturne = new THREE.Mesh(gRingSaturne, mRingSaturne);
 
         RingSaturne.rotateX(Math.PI / 2.3)
         Saturne.add(RingSaturne);
@@ -192,54 +255,60 @@ fetch("./valeurs.json")
 
         var mLune = new THREE.MeshBasicMaterial({
             map: texture.load('textures/moonmap1k.jpg'),
-
         });
-        mLune.bumpMap = texture.load('textures/moonbump1k.jpg')
-        var gLune = new THREE.SphereGeometry(2, 16, 16);
+        mLune.bumpMap = texture.load('textures/moonbump1k.jpg');
+        var gLune = new THREE.SphereGeometry(Math.log10(valeursPlanetes[2]["diametre"]) * (valeursPlanetes[9]["diametre"] / valeursPlanetes[2]["diametre"]), 360, 360);
         Lune = new THREE.Mesh(gLune, mLune);
         AxisLune.add(Lune);
         scene.add(Soleil);
 
-        //Deimos
-        var AxisDeimos = new THREE.Points(gAxis, mAxis);
-        AxisMars.add(AxisDeimos);
 
-        var deimos;
-        gltfLoader.load('./models/Deimos.glb', function(gltf) {
-            deimos = gltf.scene.children[0];
-            deimos.scale.set(0.05, 0.05, 0.05);
-            deimos.material = new THREE.MeshBasicMaterial({
-                map: texture.load('textures/deimosbump.jpg')
-            });
-            AxisDeimos.add(deimos);
-        }, );
+        var mMarker = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+        var gMarker = new THREE.SphereGeometry(0.05, 360, 360);
+        Marker = new THREE.Mesh(gMarker, mMarker);
 
-        //Phobos
-        var AxisPhobos = new THREE.Points(gAxis, mAxis);
-        AxisMars.add(AxisPhobos);
+        function getPosition() {
+            var options = {
+                enableHighAccuracy: true,
+                timeout: 5000,
+                maximumAge: 0
+            };
 
-        var phobos;
-        gltfLoader.load('./models/Phobos.glb', function(gltf) {
-            phobos = gltf.scene.children[0];
-            phobos.scale.set(0.05, 0.05, 0.05);
-            phobos.material = new THREE.MeshBasicMaterial({
-                map: texture.load('textures/phobosbump.jpg')
-            });
-            AxisPhobos.add(phobos);
-        }, );
+            function success(pos) {
+                var crd = pos.coords;
+                pos = calcPosFromLatLonRad(crd.latitude, crd.longitude, Math.log10(valeursPlanetes[2]["diametre"]))
+                Marker.position.set(pos[0], pos[1], pos[2]);
+                Terre.add(Marker)
+            }
+
+            function error(err) {
+                console.warn(`ERREUR (${err.code}): ${err.message}`);
+            }
+
+            navigator.geolocation.getCurrentPosition(success, error, options);
+        }
+        getPosition()
+            /* initialize rotation */
+        axisPlanets.forEach(axisPlanet => {
+            axisPlanet.rotation.y = Math.PI / Math.random();
+        });
+        Planets.forEach(Planet => {
+            Planet.rotation.y = Math.PI / Math.random();
+        });
 
 
-        var clock = new Date().getTime();
-        camera.lookAt(Uranus.position);
+        var v = new THREE.Vector3();
+        controls.enablePan = true;
+        var firstTime
 
         function animate() {
-            then = (clock) / 3600000000000
+
             i = 0
             axisPlanets.forEach(axisPlanet => {
                 if (valeursPlanetes[i]["position"] != "3.5") {
                     axisPlanet.position.set(0, 0, 0);
                     axisPlanet.translateX(valeursPlanetes[i]["distance"]);
-                    axisPlanet.rotateY(((Math.PI * 2) / valeursPlanetes[i]["period"]) * (then / 24));
+                    axisPlanet.rotateY((Math.PI * 2) / (valeursPlanetes[i]["period"] * 3600000 * 24) * ROTATION_DELTA);
                 }
                 i++;
             });
@@ -248,35 +317,74 @@ fetch("./valeurs.json")
             Planets.forEach(Planet => {
                 if (valeursPlanetes[j]["position"] != "3.5") {
                     Planet.position.set(0, 0, 0);
-                    Planet.rotateY(((Math.PI * 2) / valeursPlanetes[j]["rotation"]) * then);
-                    console.log(((Math.PI * 2) / valeursPlanetes[j]["rotation"]) * then)
+                    Planet.rotateY((Math.PI * 2) / (valeursPlanetes[j]["rotation"] * 3600000) * ROTATION_DELTA);
+                }
+                if (focusOn == j) {
+                    controlsTarget(Planet)
                 }
                 j++;
             });
 
+            AxisLune.position.set(0, 0, 0);
+            AxisLune.translateX(Math.log10(valeursPlanetes[2]["diametre"]) * (valeursPlanetes[9]["diametre"] / valeursPlanetes[2]["diametre"] + Math.log10(valeursPlanetes[2]["diametre"]) + 1));
+            AxisLune.rotateY((Math.PI * 2) / (valeursPlanetes[9]["period"] * 3600000 * 24) * ROTATION_DELTA);
             Lune.position.set(0, 0, 0);
-            Lune.translateX(10);
-            Lune.rotateY(-0.02);
+            Lune.rotateY((Math.PI * 2) / (valeursPlanetes[9]["rotation"] * 3600000) * ROTATION_DELTA);
 
-            if (phobos) {
-                AxisPhobos.position.set(0, 0, 0);
-                AxisPhobos.translateX(6);
-                AxisPhobos.rotateY(0.01);
-                phobos.rotateY(0.04);
+            if (focusOn == 8) {
+                controlsTarget(Soleil)
+            } else if (focusOn == 9) {
+                controlsTarget(Lune)
             }
-            if (deimos) {
-                AxisDeimos.position.set(0, 0, 0);
-                AxisDeimos.translateX(-6);
-                AxisDeimos.rotateY(0.01);
-                deimos.rotateY(0.04);
-            }
-
             RingSaturne.rotateZ(0.02);
 
-            //controls.update();
+            controls.update();
             requestAnimationFrame(animate);
             renderer.render(scene, camera);
         };
-
         animate();
+
+        $("#target-zoom").on("change", function() {
+            focusOn = this.value;
+            firstTime = true;
+        });
+        $(document).ready(function() {
+            if ($("#checkbox").prop('checked')) {
+                controls.enablePan = true;
+                checkbox = true;
+            } else {
+                controls.enablePan = false;
+                checkbox = false;
+            }
+        });
+
+
+        $("#checkbox").click(function() {
+            if ($(this).prop('checked')) {
+                controls.enablePan = true;
+                checkbox = true;
+            } else {
+                controls.enablePan = false;
+                checkbox = false;
+            }
+        })
+
+        function controlsTarget(obj) {
+            v.copy(obj.position);
+            obj.localToWorld(v);
+            Soleil.worldToLocal(v);
+
+            if (!checkbox) {
+                camera.lookAt(v);
+                console.log("checkbox")
+            }
+            if (firstTime) {
+                console.log("firstTime")
+
+                controls.target = v;
+                camera.position.set(v.x, Math.log10(valeursPlanetes[focusOn]["diametre"]) * 30 / Math.log10(valeursPlanetes[8]["diametre"]) + Math.log10(valeursPlanetes[focusOn]["diametre"]), v.z);
+                console.log(v)
+                firstTime = false
+            }
+        }
     });

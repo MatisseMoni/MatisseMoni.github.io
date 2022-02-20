@@ -107,6 +107,26 @@
             "distance": 0.384,
             "rotation": 655.7,
             "angle": 6.7
+        },
+        {
+            "position": 4.1,
+            "name": "Deimos",
+            "diametre": 12.4,
+            "period": 27.3,
+            "velocity": 1.0,
+            "distance": 0.384,
+            "rotation": 655.7,
+            "angle": 6.7
+        },
+        {
+            "position": 4.2,
+            "name": "Moon",
+            "diametre": 3475,
+            "period": 27.3,
+            "velocity": 1.0,
+            "distance": 0.384,
+            "rotation": 655.7,
+            "angle": 6.7
         }
     ]
 }
