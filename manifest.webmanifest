@@ -1,8 +1,7 @@
 {
-    "theme_color": "#f69435",
-    "background_color": "#f69435",
     "display": "fullscreen",
     "start_url": "/index.html",
+    "scope": "./*",
     "name": "TestWAP",
     "short_name": "wap",
     "icons": [{
