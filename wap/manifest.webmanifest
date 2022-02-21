@@ -1,0 +1,12 @@
+{
+    "display": "fullscreen",
+    "scope": "/*",
+    "short_name": "TestWAP",
+    "icons": [{
+        "src": "icon.png",
+        "sizes": "192x192",
+        "type": "image/png"
+    }],
+    "start_url": "index.html",
+    "name": "Moni"
+}
