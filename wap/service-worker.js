@@ -1,4 +1,4 @@
-const cacheName = 'test';
+const cacheName = 'test-cache-1.0';
 var urlsToCache = ['/', 'index.html', 'main.js'];
 self.addEventListener('install', function(event) { // Installation
     event.waitUntil( //Peut pas tuer le worker tant que pas fini et permet d’attendre et de savoir si l’installation est OK
