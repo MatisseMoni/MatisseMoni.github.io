@@ -3,7 +3,7 @@
     "background_color": "#f69435",
     "display": "fullscreen",
     "scope": "/wap/*",
-    "start_url": "/index.html",
+    "start_url": "/wap/index.html",
     "name": "TestWAP",
     "short_name": "wap",
     "icons": {
