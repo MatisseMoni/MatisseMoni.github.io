@@ -6,7 +6,7 @@
     "name": "TestWAP",
     "short_name": "wap",
     "theme_color": "#eb5252",
-  "background_color": "#000000",
+    "background_color": "#000000",
     "icons": [{
         "src": "img/icon.png",
         "sizes": "192x192",
