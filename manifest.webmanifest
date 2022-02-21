@@ -2,7 +2,7 @@
 
     "display": "fullscreen",
     "start_url": "/index.html",
-    "scope": "./*",
+    "scope": "/",
     "name": "TestWAP",
     "short_name": "wap",
     "theme_color": "#eb5252",
