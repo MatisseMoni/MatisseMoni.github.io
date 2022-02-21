@@ -2,11 +2,11 @@
     "theme_color": "#f69435",
     "background_color": "#f69435",
     "display": "fullscreen",
-    "scope": "wap/*",
+    "scope": "/wap/*",
     "start_url": "/index.html",
     "name": "TestWAP",
     "short_name": "wap",
     "icons": {
-        "name": "wap/favicon.ico"
+        "name": "/wap/favicon.ico"
     }
 }
