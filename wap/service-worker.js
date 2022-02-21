@@ -25,37 +25,3 @@ self.addEventListener('fetch', evt => { // Sur une requête (avec ou sans la mé
             });
         }));
 });
-
-/*self.addEventListener('sync', function(event) {
-    if (event.tag !== 'undefined') {
-        event.waitUntil(notifDispo(event.tag));
-    } // On lance la requête
-});
-
-function notifDispo(id) {
-    fetch("http://127.0.0.1:3001/livres/" + id)
-        .then(function(reponse) {
-            var data = reponse.json();
-            if (reponse.statusText === "OK") return data;
-        }).then(function(data) {
-            notifyMe("Nombre de livres disponible", data["dispo"]);
-        });
-}
-
-function notifyMe(title, body) {
-    var options = {
-        body: body
-    }
-
-    if (!('Notification' in window)) {
-        alert('Ce navigateur ne prend pas en charge la notification de bureau')
-    } else if (Notification.permission === 'granted') {
-        const notification = new Notification(title, options)
-    } else if (Notification.permission !== 'denied') {
-        Notification.requestPermission().then((permission) => {
-            if (permission === 'granted') {
-                const notification = new Notification(title, options)
-            }
-        })
-    }
-}*/
