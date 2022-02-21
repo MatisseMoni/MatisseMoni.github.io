@@ -1,7 +1,7 @@
 {
     "Planetes": [{
             "position": 1,
-            "name": "Mercury",
+            "name": "Mercure",
             "diametre": 4879,
             "period": 88.0,
             "velocity": 47.4,
@@ -13,7 +13,7 @@
         },
         {
             "position": 2,
-            "name": "Venus",
+            "name": "Vénus",
             "diametre": 12104,
             "period": 224.7,
             "velocity": 35.0,
@@ -24,7 +24,7 @@
         },
         {
             "position": 3,
-            "name": "Earth",
+            "name": "Terre",
             "diametre": 12756,
             "period": 365.2,
             "velocity": 29.8,
@@ -57,7 +57,7 @@
         },
         {
             "position": 6,
-            "name": "Saturn",
+            "name": "Saturne",
             "diametre": 120536,
             "period": 10747,
             "velocity": 9.7,
@@ -90,7 +90,7 @@
         },
         {
             "position": 9,
-            "name": "Sun",
+            "name": "Soleil",
             "diametre": 139270000,
             "period": 0,
             "velocity": 220,
@@ -100,27 +100,7 @@
         },
         {
             "position": 3.5,
-            "name": "Moon",
-            "diametre": 3475,
-            "period": 27.3,
-            "velocity": 1.0,
-            "distance": 0.384,
-            "rotation": 655.7,
-            "angle": 6.7
-        },
-        {
-            "position": 4.1,
-            "name": "Deimos",
-            "diametre": 12.4,
-            "period": 27.3,
-            "velocity": 1.0,
-            "distance": 0.384,
-            "rotation": 655.7,
-            "angle": 6.7
-        },
-        {
-            "position": 4.2,
-            "name": "Moon",
+            "name": "Lune",
             "diametre": 3475,
             "period": 27.3,
             "velocity": 1.0,

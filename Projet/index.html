@@ -7,15 +7,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.11.1/dist/css/uikit.min.css" />
     <link rel="stylesheet" href="style.css">
 </head>
-<!--
-    il manque :
-    orbital control zoom at object avec min et max
-    camera follow object
-
-    pannel info sur la planete
-    Mettre la lumiere sur le soleil
-
--->
 
 <body>
     <div id="nav-control" class="uk-position-top-right uk-navbar-container">
@@ -41,15 +32,23 @@
                     <option value="9">Lune</option>
                 </select>
             </div>
+        </div>
+        <div>
+            <div class="uk-h3"></div>
+            <div class="uk-button uk-button-primary" id="recentrer">Recentrer</div>
+        </div>
+        <div>
+            <div class="uk-h3">Lumière</div>
             <div>
-                <label class="uk-h3">Camera libre</label>
-                <div>
-                    <label class="switch">
-                        <input id="checkbox" type="checkbox" checked>
-                        <span class="slider-checkbox round"></span>
-                    </label>
-                </div>
+                <label class="switch">
+                    <input id="checkbox" type="checkbox" checked>
+                    <span class="slider-checkbox round"></span>
+                </label>
             </div>
+        </div>
+        <div id="distanceContener">
+            <div class="uk-h3">Distance : <br>position actuelle/<span id="nomPlanete"></span></div>
+            <p id="resultaDistance"></p>
         </div>
 
 

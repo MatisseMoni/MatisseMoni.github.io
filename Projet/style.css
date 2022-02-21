@@ -10,50 +10,51 @@ body {
     max-width: 500px;
     background-color: rgba(151, 149, 149, 0.699);
 }
+
 .slider-value {
     -webkit-appearance: none;
     width: 100%;
     height: 15px;
-    border-radius: 5px;  
+    border-radius: 5px;
     background: #d3d3d3;
     outline: none;
     opacity: 0.7;
     -webkit-transition: .2s;
     transition: opacity .2s;
-  }
-  
-  .slider-value::-webkit-slider-thumb {
+}
+
+.slider-value::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%; 
-    background: #2196F3;
-    cursor: pointer;
-  }
-  
-  .slider-value::-moz-range-thumb {
     width: 25px;
     height: 25px;
     border-radius: 50%;
     background: #2196F3;
     cursor: pointer;
-  }
+}
 
-  .switch {
+.slider-value::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #2196F3;
+    cursor: pointer;
+}
+
+.switch {
     position: relative;
     display: inline-block;
     width: 60px;
     height: 34px;
-  }
-  
-  .switch input { 
+}
+
+.switch input {
     opacity: 0;
     width: 0;
     height: 0;
-  }
-  
-  .slider-checkbox {
+}
+
+.slider-checkbox {
     position: absolute;
     cursor: pointer;
     top: 0;
@@ -63,9 +64,9 @@ body {
     background-color: #ccc;
     -webkit-transition: .4s;
     transition: .4s;
-  }
-  
-  .slider-checkbox:before {
+}
+
+.slider-checkbox:before {
     position: absolute;
     content: "";
     height: 26px;
@@ -75,27 +76,45 @@ body {
     background-color: white;
     -webkit-transition: .4s;
     transition: .4s;
-  }
-  
-  input:checked + .slider-checkbox {
+}
+
+input:checked+.slider-checkbox {
     background-color: #2196F3;
-  }
-  
-  input:focus + .slider-checkbox {
+}
+
+input:focus+.slider-checkbox {
     box-shadow: 0 0 1px #2196F3;
-  }
-  
-  input:checked + .slider-checkbox:before {
+}
+
+input:checked+.slider-checkbox:before {
     -webkit-transform: translateX(26px);
     -ms-transform: translateX(26px);
     transform: translateX(26px);
-  }
-  
-  /* Rounded sliders */
-  .slider-checkbox.round {
+}
+
+
+/* Rounded sliders */
+
+.slider-checkbox.round {
     border-radius: 34px;
-  }
-  
-  .slider-checkbox.round:before {
+}
+
+.slider-checkbox.round:before {
     border-radius: 50%;
-  }
+}
+
+.uk-button {
+    width: 100%;
+}
+
+#distanceContener {
+    display: none;
+}
+
+#resultaDistance {
+    color: black;
+}
+
+#nav-control>div {
+  margin-top: 20px;
+}
