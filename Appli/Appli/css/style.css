@@ -1,0 +1,67 @@
+:root {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: coral;
+    width: 100%;
+    height: max-content;
+}
+
+#app {
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+select {
+    width: 200px;
+    height: 30px;
+    border: 1px solid #999;
+    font-size: 18px;
+    color: #1c87c9;
+    background-color: #eee;
+    border-radius: 5px;
+    box-shadow: 4px 4px #ccc;
+}
+
+.div_input {
+    margin-bottom: 20px;
+    padding: 10px 0;
+}
+
+#filters {
+    margin-top: 40px;
+    background-color: steelblue;
+    padding: 40px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+
+#filters h3,
+#filters h2,
+#filters label,
+#filters input,
+#filters legend,
+span {
+    color: #fff;
+}
+
+.pointer-label,
+.scale ins {
+    font-size: 14px !important;
+    background: none !important;
+    color: #fff !important;
+}
+
+button {
+    border: 2px solid #fff;
+    background-color: steelblue;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #fff;
+    color: steelblue;
+}
